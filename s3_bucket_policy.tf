@@ -1,3 +1,22 @@
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.my_bucket.id  # Replace with your bucket resource reference
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "AllowIAMUserAccess",
+        Effect    = "Allow",
+        Principal = {
+          AWS = aws_iam_user.s3_user.arn,  # ARN of the IAM user
+        },
+        Action    = "s3:*",
+        Resource  = "arn:aws:s3:::asd-test-bucket-1/*",
+      },
+    ],
+  })
+}
+
 # resource "aws_s3_bucket_policy" "bucket_policy" {
 #   bucket = aws_s3_bucket.my_bucket.id  # Replace with your bucket resource reference
 
@@ -5,7 +24,7 @@
 #     Version = "2012-10-17",
 #     Statement = [
 #       {
-#         Sid       = "AllowReadWriteFrom82",
+#         Sid       = "AllowReadWriteFrom",
 #         Effect    = "Allow",
 #         Principal = "*",
 #         Action    = [
@@ -21,7 +40,7 @@
 #         # }
 #       },
 #       {
-#         Sid       = "AllowReadFrom13",
+#         Sid       = "AllowReadFrom",
 #         Effect    = "Allow",
 #         Principal = "*",
 #         Action    = "s3:GetObject",
