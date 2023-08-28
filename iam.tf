@@ -1,3 +1,16 @@
+resource "aws_iam_user" "s3_user_2" {
+  name = "s3-user-2"
+}
+
+  resource "aws_iam_access_key" "s3_user_2_access_key" {
+  user = aws_iam_user.s3_user_2.name
+}
+
+  output "s3_user_2_secret_access_key" {
+  value = aws_iam_access_key.s3_user_2_access_key.secret
+  sensitive = true
+}
+
 resource "aws_iam_user" "s3_user" {
   name = "s3-user"
 }
